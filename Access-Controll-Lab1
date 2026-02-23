@@ -1,0 +1,22 @@
+Goal:- There is a unprotected admin functionality. We have to find admin pannel and delete a user.
+
+Observation:- The link to the admin pannel was disclosed in robots.txt 
+                as  /administrator-panel
+
+Steps to solve :- 
+
+        Step1:- Access the lab
+        Step2:- Search for robots.txt by changing the Url
+        Step3:- there is a disclosre to admin pannel 
+        step4:- Go to /administrator-panel
+        Step5:- Delete user name Carlos
+
+Result:- Access to admin pannel and we can add or delete user from the database
+
+Root Cause:-The admin functionality was exposed because:
+
+        1) Sensitive endpoints were disclosed inside robots.txt, which is publicly accessible.
+
+        2) The admin panel had no authentication or authorization controls, allowing anyone who discovered the URL to access privileged functions.
+
+Fix:- Protect admin functionality with proper authentication and authorization, and avoid disclosing sensitive paths in publicly accessible files such as robots.txt.
