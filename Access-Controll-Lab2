@@ -1,0 +1,22 @@
+Goal:- There is a unprotected admin functionality. We have to find admin pannel and delete a user.
+
+Observation:- The link to the admin pannel was disclosed inside the page source 
+                as a function in javascript
+
+Steps to solve :- 
+
+        Step1:- Access the lab
+        Step2:- Open view page source 
+        Step3:- there is a disclosre to admin pannel as a function of javascript as /admin-d1ax2d
+        step4:- Go to /admin-d1ax2d
+        Step5:- Delete user name Carlos
+
+Result:- Access to admin pannel and we can add or delete user from the database
+
+Root Cause:-The admin functionality was exposed because:
+
+        1) Sensitive endpoints were disclosed inside page source, which is publicly accessible.
+
+        2) The admin panel had no authentication or authorization controls, allowing anyone who discovered the URL to access privileged functions.
+
+Fix:- Protect admin functionality with proper authentication and authorization, and avoid disclosing sensitive paths in publicly accessible files .
