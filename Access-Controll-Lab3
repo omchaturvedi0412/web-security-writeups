@@ -1,0 +1,21 @@
+Goal:-  This lab has an admin panel at /admin, which identifies administrators using a forgeable cookie. Solve the lab by accessing the admin panel and using it to delete the user carlos
+
+Observation:- admin pannel is accessed by changing the role using burpsuit
+
+Steps to solve :- 
+
+        Step1:- Access the lab
+        Step2:- Login Using given credential
+        Step3:- while moving to "my account" change the request using burpsuit 
+        step4:- change isadmin from false to true 
+        Step5:- Delete user name Carlos
+
+Result:- Access to admin pannel and we can add or delete user from the database
+
+Root Cause:-1) The application identifies administrator privileges using a client-side cookie that can be modified by the user.
+
+            2) There is no server-side validation of user roles or privileges.
+
+            3) Authorization decisions are based on untrusted user input, allowing privilege escalation by changing isadmin=false to isadmin=true
+
+Fix:-  Enforce server-side authorization and use signed session mechanisms instead of trusting client-side role values.
