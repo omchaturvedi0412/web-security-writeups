@@ -1,0 +1,20 @@
+Lab: User ID controlled by request parameter 
+
+Goal:- This lab has a horizontal privilege escalation vulnerability on the user account page. To solve the lab, obtain the API key for the user carlos and submit it as the solution. 
+
+Observation:- Their exist a IDOR vulnarebility at user account page where you can change the id in the search bar and data od other users are visible 
+
+Steps to solve :- 
+
+        Step1:- Access the lab
+        Step2:- Login using given credentials
+        Step3:- Go to my account
+        step4:- in search bar observe "web-security-academy.net/my-account?id=weinier"
+        Step5:- change id from weinier to carlos
+        Step6:- Report the api of carlos to the server
+
+Result:- Access to other user account by changing the id.
+
+Root Cause:- Missing object-level authorization allowed access to other user accounts by modifying the id parameter.
+
+Fix:- Add server-side access checks to ensure users can only access their own data.
