@@ -1,0 +1,21 @@
+Lab: User ID controlled by request parameter, with unpredictable user IDs 
+
+Goal:- Lab has a horizontal privilege escalation vulnerability on the user account page, but identifies users with GUIDs. To solve the lab, find the GUID for carlos, then submit his API key as the solution. 
+
+Observation:- Disclosre of user ids in URL where we can access the info of the account of other users
+
+Steps to solve :- 
+
+        Step1:- Access the lab
+        Step2:- Login using given credentials
+        Step3:- Go to Home
+        step4:- Open any vlog 
+        Step5:- click on the user and there exist a their GUIDs in the search bar
+        Step6:- In my account replace that id with your GUID 
+        Step7:- report the api to the server
+
+Result:- Access to other user account by changing the GUID which is disclosed in view account
+
+Root Cause:- The application uses GUID based identifiers but fails to implement proper server-side object level authorization, allowing users to access other accounts once valid GUIDs are discovered.
+
+Fix:- Implement strict object level authorization on the server side and ensure that resource access is validated against the authenticated user, regardless of identifier type.
