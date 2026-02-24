@@ -1,0 +1,30 @@
+Goal:- lab has an admin panel at /admin. It's only accessible to logged-in users with a roleid of 2. Solve the lab by accessing the admin panel and using it to delete the user carlos. 
+
+Observation:- While changing the email address , role id was disclosed inside JSON
+
+Steps to solve :- 
+
+        Step1:- Access the lab
+        Step2:- Login using the given credentials
+        Step3:- change the email and capture the request in burpsuit 
+        step4:- send the request to repeater check the JSON
+        Step5:- Role id, email , api was disclosed inside JSON as 
+
+
+{
+  "username": "wiener",
+  "email": "xyz@gmail.com",
+  "apikey": "JIsIg0ZUTQbPFgx8HPnxuxhZHSTYw9fehwUv",
+  "roleid": 1
+}
+
+
+        Step6:- change role id to 2 
+        Step7:- You got the access to admin pannel 
+        Step8:- Delete user carlos
+
+Result:- Access to admin pannel and we can add or delete user from the database
+
+Root Cause:- Sensitive parameter roleid was exposed and modifiable through client-side JSON without server-side validation.
+
+Fix:- Enforce server-side authorization, restrict editable parameters, and prevent users from modifying role-related fields.
