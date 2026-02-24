@@ -1,0 +1,30 @@
+Lab: User ID controlled by request parameter with data leakage in redirect 
+
+Goal:-  This lab contains an access control vulnerability where sensitive information is leaked in the body of a redirect response. To solve the lab, obtain the API key for the user carlos and submit it as the solution.
+You can log in to your own account using the following credentials: wiener:peter 
+
+Observation:- data is leaked when redirecting to login page
+Steps to solve :- 
+        Step1:- Access the lab
+        Step2:- Login using given credentials
+        Step3:- Go to my account
+        step4:- in URL observe "web-security-academy.net/my-account?id=weinier"
+        Step5:- change id from weinier to carlos
+        Step6:- it will redirect you to login page 
+        Step7:- while redirecting , interupt the request in burpsuit repeater. You will get the api for carlos
+        Step8:- Submit the api to the server
+
+Result:- Sensitive information (API key) of another user was disclosed in the response body during a redirect, allowing unauthorized access to protected data.
+
+Root Cause:- The application fails to enforce authorization prior to generating the response, resulting in sensitive data leakage within a redirect response. This, combined with user controlled identifiers, leads to an IDOR vulnerability.
+
+Fix:- Validate user authorization before retrieving or rendering sensitive data, and ensure redirect responses contain no confidential information. Implement proper object-level access control for all user specific endpoints.
+
+
+
+
+
+
+
+
+
