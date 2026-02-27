@@ -1,0 +1,31 @@
+Lab: Multi-step process with no access control on one step
+
+Goal:-     This lab has an admin panel with a flawed multi-step process for changing a user's role. You can familiarize yourself with the admin panel by logging in using the credentials administrator:admin.
+To solve the lab, log in using the credentials wiener:peter and exploit the flawed access controls to promote yourself to become an administrator. 
+
+Observation:- #The role-change functionality follows a multi step workflow.
+              #The first step requires admin privileges and initiates the role change.
+              #The second step is a confirmation request that finalizes the action.
+              #Proper access control is enforced in the initial step but missing in the confirmation step.
+              #By replaying the confirmation request with a normal user session, privilege escalation becomes possible.
+
+Steps to solve :- 
+        Step1:- Access the lab
+        Step2:- Login using administrator credential 
+        Step3:- Change role of carlos from normal to administrator and capture the request in the burpsuit 
+        Step4:- Now confirm for the request and capture the request in burpsuit
+        step5:- now loging as given credential of normal user
+        Step6:- go to my account and capture the reqest in burpsuit 
+        Step6:- chnage the request type of request of carlos from post to get of confirmation request
+        Step7:- Change cookie session (replace carlos cookiee with wiener) change name from carlos to wiener of confirmation request
+        Step8:- Send reqest 
+
+Root Cause:- #Access control validation was applied only to the initial step of the workflow.
+             #The confirmation endpoint trusted previously initiated actions without re verifying user authorization.
+             #Lack of authorization checks on every step of the multi step process allowed unauthorized users to complete privileged actions.
+
+Vulnerability Type:- Broken Access Control
+
+                     Multi-Step Process Access Control Bypass
+
+                     Privilege Escalation
