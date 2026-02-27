@@ -1,0 +1,25 @@
+Lab: Method-based access control can be circumvented
+
+Goal:-    This lab implements access controls based partly on the HTTP method of requests. You can familiarize yourself with the admin panel by logging in using the credentials administrator:admin.
+To solve the lab, log in using the credentials wiener:peter and exploit the flawed access controls to promote yourself to become an administrator. 
+
+Observation:- #Role modification requests are normally sent using the POST method.
+              #Access control was partially enforced based on the HTTP method.
+              #When the request method was changed from POST to GET, authorization checks were not properly applied.
+              #This allowed a normal user session to perform an admin level action and upgrade privileges.
+Steps to solve :- 
+        Step1:- Access the lab
+        Step2:- Login using administrator credential 
+        Step3:- Change role of carlos from normal to administrator and capture the request in the burpsuit 
+        step4:- now loging as given credential of normal user
+        Step5:- go to my account and capture the reqest in burpsuit 
+        Step6:- chnage the request type of request of carlos from post to get 
+        Step7:- Change cookie session (replace carlos cookiee with wiener) change name from carlos to wiener 
+        Step8:- Send reqest 
+
+Root Cause:- #The application implemented access control checks inconsistently across HTTP methods.
+             #Authorization validation was tied to specific request methods instead of being enforced universally.
+             #As a result, changing the HTTP method bypassed the intended access restrictions.
+
+Vulnerability Type:- Broken Access Control
+                     Method-based Access Control Bypass
