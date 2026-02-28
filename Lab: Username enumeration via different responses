@@ -1,0 +1,30 @@
+Lab: Username enumeration via different responses
+
+Goal:-  This lab is vulnerable to username enumeration and password brute-force attacks. It has an account with a predictable username and password, which can be found in the following wordlists:
+    Candidate usernames
+    Candidate passwords
+To solve the lab, enumerate a valid username, brute-force this user's password, then access their account page. 
+
+Observation:- #The login functionality returns different responses for valid and invalid usernames.
+              #When an invalid username is used, the application shows a different error message or response behavior compared to a valid username with a wrong password.
+              #This difference allows attackers to identify existing usernames (username enumeration).
+              #After identifying a valid username, password brute forcing becomes possible due to lack of sufficient protection.
+Steps to solve :- 
+        Step1:- Access the lab
+        Step2:- Go to my account
+        Step3:- try to login with random id pass and intercept the request in burpsuit
+        step4:- send the request to intruder and add payloads on credential you entered
+        Step5:- add wordlist in payload section
+        Step6:- start attack
+        Step7:- Login with credential that found while bruitforcing
+        
+
+Root Cause:- #The application provides distinguishable authentication responses based on username validity.
+             #Error messages and response behavior leak information about whether a username exists.
+             #Missing protections such as rate limiting, account lockout, or brute force detection allowed repeated login attempts.
+
+Vulnerability Type:-  Username Enumeration
+
+                      Brute Force Attack (Authentication Weakness)
+
+                      Broken Authentication
