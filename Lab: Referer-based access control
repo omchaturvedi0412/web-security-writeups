@@ -1,0 +1,26 @@
+Lab: Referer-based access control 
+
+Goal:-     This lab controls access to certain admin functionality based on the Referer header. You can familiarize yourself with the admin panel by logging in using the credentials administrator:admin.
+To solve the lab, log in using the credentials wiener:peter and exploit the flawed access controls to promote yourself to become an administrator.
+
+Observation:- #The application restricts access to admin functionality using the Referer header instead of proper authorization checks.
+              #Admin actions include a Referer value pointing to /admin.
+              #The server trusts the Referer header without verifying the user’s actual privileges.
+              #A normal user can modify the request and manually set the Referer to /admin to perform admin level actions.
+
+Steps to solve :- 
+        Step1:- Access the lab
+        Step2:- Login using administrator credential 
+        Step3:- Change role of carlos from normal to administrator and capture the request in the burpsuit 
+        step4:- now loging as given credential of normal user
+        Step5:- go to my account and capture the reqest in burpsuit 
+        Step6:- Change cookie session (replace carlos cookiee with wiener) change name from carlos to wiener while keeping refrer as /admin
+        Step7:- Send reqest 
+
+Root Cause:- #Access control decisions were based on a client controlled HTTP header (Referer).
+             #The server assumed that requests originating from the admin page were legitimate without validating user roles.
+             #Since headers can be easily modified, this resulted in access control bypass.
+
+Vulnerability Type:- #Broken Access Control
+                     #Referer based Access Control Bypass
+
