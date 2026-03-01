@@ -1,0 +1,24 @@
+Lab: 2FA simple bypass
+
+Goal:-  This lab's two-factor authentication can be bypassed. You have already obtained a valid username and password, but do not have access to the user's 2FA verification code. To solve the lab, access Carlos's account page.
+        Your credentials: wiener:peter
+        Victim's credentials carlos:montoya
+
+Observation:- #The application requires a username and password followed by a 2FA verification step.
+              #After entering valid credentials, the user is redirected to a 2FA verification page.
+              #However, the application creates an authenticated session before completing 2FA.
+              #By directly accessing the account page URL, the user can bypass the 2FA step and access the account without entering the verification code.
+
+Steps to solve :- 
+        Step1:- Access the lab
+        Step2:- Login using given credential and capture request of moving to my account
+        Step3:- login using victim credential 
+        step4:- at the time of two factor varification skip the page and try to open my account
+        
+
+Root Cause:- #The application fails to enforce 2FA validation before granting access to authenticated resources.
+             #Session state is marked as logged in after password verification instead of after successful 2FA completion.
+             #Missing server side checks allowed users to skip the second authentication step.
+Vulnerability Type:- #Authentication Logic Flaw
+                     #2FA Bypass
+                     #Broken Authentication/Identification & Authentication Failures
