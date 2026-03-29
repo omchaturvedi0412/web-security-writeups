@@ -1,0 +1,55 @@
+Lab: Username enumeration via subtly different responses
+
+Goal:-    This lab is subtly vulnerable to username enumeration and password brute-force attacks. It has an account with a predictable username and password, which can be found in the following wordlists:
+          Candidate usernames
+          Candidate passwords
+        To solve the lab, enumerate a valid username, brute-force this user's password, then access their account page. 
+
+Observation:- #The login response differs very subtly based on whether the username is valid.
+
+              #Invalid credentials usually return:
+                      "Invalid username or password." (with a period)
+
+              #For a valid username but wrong password, response changes to:
+                      "Invalid username or password" (no period)
+              #This tiny difference leaks information → allows username enumeration
+
+Steps to solve :- 
+        Step1:- Access the lab. Open the login page.
+
+        Step2:- Capture request
+                                $ Enter random credentials
+                                $ Intercept request in Burp Suite
+                                $ Send to Intruder
+
+        Step3:- Username enumeration
+                                    $ Set payload position on username field
+                                    $ Use provided candidate usernames list
+                                    $ Go to Grep - Extract
+                                    $ Add string:  Invalid username or password.
+                                    $ Run attack
+
+        step4:- Identify valid username
+                                      $ Look for response missing the full stop (.)
+                                      $ That request corresponds to a valid username
+###  This is the key moment. If you miss this, you fail the lab.  ###
+
+        step5:- Password brute-force
+                                    $ Fix the valid username
+                                    $ Move payload position to password field
+                                    $ Use candidate passwords list
+                                    $ Run attack
+
+        step6:-Find correct password
+                                    $ Successful login will:
+                                    $ Redirect (302) OR
+                                    $ Different response length/status
+
+        step7:- Login
+                      $ Use valid credentials → access account → lab solved
+
+Root Cause:- # The application provides inconsistent error messages
+
+Vulnerability Type:- # Username Enumeration
+                     # Broken Authentication
+                     # Information Disclosure
